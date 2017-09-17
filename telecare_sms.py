@@ -6,7 +6,7 @@ import urllib
 
 sms_apikey = 'NXqJDwuUIkQ-wEQRo0cSbXyQKoQdmVZTb96zUxXz1r'
 mobile_number = raw_input("Enter a mobile number to receive SMS:")
-SMS_THRESHOLD = 60  # Number of timesteps with activity detected before SMS sent
+SMS_THRESHOLD = 30  # Number of timesteps with activity detected before SMS sent
 SMS_RESEND_DELAY = 240  # Number of timesteps to wait before sending another SMS
 
 GPIO.setmode(GPIO.BCM)
@@ -148,7 +148,7 @@ while True:
 
 
         # Send SMS
-        if reading_count > SMS_THRESHOLD:
+        if reading_count > SMS_THRESHOLD and last_sms_count == 0:
             if mobile_number:
                 resp = send_sms(sms_apikey, mobile_number,
                                 'Telecare', 'Billy got up')
